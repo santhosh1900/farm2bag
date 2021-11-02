@@ -1,0 +1,244 @@
+<div>
+    <app-navbar 
+        (LoggedUserEvent)="Logged_User($event)"
+        [user_cart] = "userCart"
+        (User_Cart_Event)	= "User_Cart_Event_Catch($event)"
+        (SearchBarClickEvent) = "GotoNextPage($event)">
+    </app-navbar>
+
+    <app-loader *ngIf="loader"></app-loader>
+
+    <app-scroll-top></app-scroll-top>
+
+    <div *ngIf="!loader">
+        <div class="container-fluid" id="show__item" style="margin-bottom: 10rem;">
+            <div class="row">
+
+                <div class="col s12 m12 l6">
+                    <img class="materialboxed" id="product__image" width="100%" src="{{ Product.image }}" style="margin-top: 2rem;">
+                </div>
+
+                <div class="col s12 m12 l6">
+                    <div class="card">
+                        <div class="card-content">
+                            <span class="card-title text-center">{{Product.name}} ( {{Product.tamilName}} ) <i class="fa fa-heart-o" aria-hidden="true"></i> </span>
+                            <span class="card-title text-center mrp"> 
+                                MRP : <span class="strike_price"> &#8377; {{Product.strikePrice}} </span> &#8377; {{Product.actualPrice}} 
+                                <span>( {{Product.weight || "500g"}} )</span>
+                            </span>
+                            <div style="text-align: center;">
+                                <small>Farmed By : Group of Farmers, Ooty, Mettupalayam</small>
+                                <h6 class="product_note">
+                                    Farm : {{ Product.farm.name }}
+                                </h6>
+                            </div>
+                            <div>
+                                <ul class="collection" id="product_desc"></ul>
+                            </div>
+                            <h6 class="product_note" *ngIf="Product.note">
+                                {{ Product.note }}
+                            </h6>
+                            <h6 class="product_note">
+                                Note: Prices may vary daily based on market rate.
+                            </h6>
+                            <br>
+
+                            <hr class="style-one">
+                            
+                            <h6> Avalibility :
+                                <span class="stockleft" *ngIf="Product.quantity <= 200 && Product.quantity > 0 ">Only {{Product.quantity}} left in stock</span>  
+                                <span class="instock" *ngIf="Product.quantity > 200">In Stock</span>  
+                                <span class="outofstock" *ngIf="Product.quantity == 0">Out Of Stock</span>  
+                            </h6>
+                            <br>
+                            <a *ngIf="Product.quantity > 0" (click)="AddToCart(Product)" class="btn-floating btn-large waves-effect #43a047 green darken-1"><i class="material-icons">add</i></a>
+                            
+                            <div class="row">
+                                <div class="col s12">
+                                    <form>
+                                        <div class="row">
+                                            <div class="input-field col s6">
+                                                <i class="material-icons prefix">search</i>
+                                                <input id="icon_prefix" type="text" class="validate">
+                                                <label for="icon_prefix" style="white-space: nowrap;">Pincode to check delivery info</label>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        
+                            <div>
+                            <h6>Share it :</h6>
+                                <br>
+                                <div class="row">
+                                    <div class="col s6" style="display: flex;">
+                                        <a class="btn mr-4 #1976d2 blue darken-2"> <i class="fa fa-facebook" aria-hidden="true"></i> </a>
+                                        <a class="btn mr-4 #1a237e indigo darken-4"> <i class="fa fa-linkedin" aria-hidden="true"></i> </a>
+                                        <a class="btn mr-4 #2196f3 blue"> <i class="fa fa-twitter" aria-hidden="true"></i> </a>
+                                        <a class="btn mr-4 #2e7d32 green darken-3"> <i class="fa fa-whatsapp" aria-hidden="true"></i> </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- review and farmers information -->
+            <div class="row">
+                <div class="col s12">
+                    <div class="card">
+                        <div class="card-tabs">
+                            <ul class="tabs tabs2 tabs-fixed-width">
+                                <li class="tab">
+                                    <a class="active" href="#Reviews">Reviews</a>
+                                </li>
+                                <li class="tab">
+                                    <a  href="#FarmerProfile">Farmer's Profile</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-content">
+
+                            <div id="Reviews">
+                            <p>No Reviews is available for this product</p>
+                            </div>
+
+                            <div id="FarmerProfile">
+                                <div class="horizontal row">
+                                    <div class="col s12 m5 l3 mb-3">
+                                        <img class="farmer_img" src="https://images.unsplash.com/photo-1530507629858-e4977d30e9e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=296&q=80">
+                                    </div>
+                                    <div class="col s12 m7 l4 mb-3">
+                                        <div class="card-stacked">
+                                            <div class="card-content">
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Farmer's Name</td>
+                                                            <td> : </td>
+                                                            <th>Group of Farmers</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Farming In</td>
+                                                            <td> : </td>
+                                                            <th>Ooty, Mettupalayam</th>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col s12 m12 l5 mb-3">
+                                        <div class="video_container">
+                                            <iframe width="560" height="315" src="https://www.youtube.com/embed/LctBGcw5F-I" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Related Products</h3>
+
+            <div class="horizontal__slide" style="display: flex;">
+                <div class="arrows"  (click)="pushRight($event)">
+                    <a class="scroll-up-left"><i class="fa fa-arrow-left fa-2x" aria-hidden="true"></i></a>
+                </div>
+                
+                <div class="market__items" 
+                    (mousedown) 	= "mouseDown($event)" 
+                    (mouseleave) 	= "mouseLeave($event)" 
+                    (mouseup)		= "mouseUp($event)" 
+                    (mousemove)		= "mousemove($event)">
+                    
+                    <div style="display: flex;" *ngFor="let vegetable of allProducts">
+                        <div class="card scrolling_card">
+                            <div class="card-image">
+                                <img src= {{vegetable.image}} class="item__img" (click)="ShowPage(vegetable._id)">
+                                <span class="card-title scrolling_card_title">
+                                    <span>{{ vegetable.name }}</span>
+                                    <span style="white-space: nowrap;">( {{ vegetable.tamilName }} )</span>
+                                    <span>( {{vegetable.weight || "500g"}}  )</span>
+                                    <span>( {{vegetable.farm.name || "undefined"}} )</span>
+                                </span>
+                            </div>
+                            <div class="card-action">
+                                <a>
+                                    <h6 class="price__tag"> 
+                                        <span style="color: #0f0f0f;">MRP :</span>  
+                                        <span class="strike_rate"> &#8377; {{vegetable.strikePrice}} </span> 
+                                        <span style="font-weight: bold; color: #0f0f0f;"> &#8377;{{vegetable.actualPrice}}</span> 
+                                        <i class="fa fa-shopping-cart right" (click)="AddToCart(vegetable)" *ngIf="vegetable.quantity > 0" aria-hidden="true" style="color:#2e7d32 ;"></i>
+                                    </h6>
+                                </a>
+                                <a>
+                                    <h6 class="price__tag"> 
+                                        <span class="stockleft" *ngIf="vegetable.quantity <= 200 && vegetable.quantity > 0 ">Only {{vegetable.quantity}} left in stock</span>  
+                                        <span class="instock" *ngIf="vegetable.quantity > 200">In Stock</span>  
+                                        <span class="outofstock" *ngIf="vegetable.quantity == 0">Out Of Stock</span>  
+                                    </h6>
+                                </a>                            
+                            </div>
+                        </div>
+                        <div class="slide__in">
+                            <a (click)="info(vegetable)" class="modal-trigger" style="color: black;" href="#productDesc"><i class="fa fa-eye fa-2x" aria-hidden="true"></i></a>
+                            <br>
+                            <br>
+                            <a href="#" style="color: black;"><i class="fa fa-heart-o fa-2x" aria-hidden="true"></i></a>
+                        </div>
+                    </div> 
+
+                </div>
+                
+                <div class="arrows" >
+                    <a  (click)="pushLeft($event)" class="scroll-up-right"><i class="fa fa-arrow-right fa-2x" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+        <app-footer></app-footer>
+    </div>
+</div>
+
+
+<div id="productDesc" class="modal">
+    <div class="modal-content">
+		<div>
+			<div class="row">
+				<div class="col s6 m6">
+					<h4 id="product_title"></h4>
+				</div>
+				<div class="col s6 m6">
+					<a class="modal-close right" id="modal_close" (click)="resetmodel()"  >  <i class="material-icons cancel">cancel</i> </a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="modal-content2">
+		<div class="row">
+			<div class="col s12 m12 l6">
+				<img class="materialboxed" id="modal_img"  width="100%" src="https://qph.fs.quoracdn.net/main-qimg-09e05578ff44fa33e0218fd178922ff1.webp">
+				<ul class="collection">
+					<li class="collection-item center" id="modal_farm">Farm : peelamedu</li>
+					<li class="collection-item center" id="modal_weight">Weight 500g</li>
+					<li class="collection-item center" id="modal_MRP">MRP : 200RS</li>
+					<li class="collection-item center" id="moda_cart">
+						<i class="fa fa-shopping-cart fa-2x" id="modal_cart_icon" aria-hidden="true" style="color:#2e7d32;"></i>
+					</li>
+				</ul>
+			</div>
+			<div class="col s12 m12 l6">
+				<ul class="collection with-header" id="productDesc2">
+					<li class="collection-header"><h4 class="desc">Product Description</h4></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+</div>

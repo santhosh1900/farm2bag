@@ -1,0 +1,144 @@
+<div style="min-height: 100vh; padding: 20px;">
+    <h4 class="heading">Account Info</h4>
+
+    <app-profilepageloader *ngIf="Loader"></app-profilepageloader>
+
+    <div *ngIf="!Loader">
+
+        <div class="row" style="margin-top: 3rem;" >
+            <div class="col s4">
+                <img id="profile__image" src="{{ CurrentUser.ProfilePic }}">
+
+                <label for="img" class="btn-floating btn-small waves-effect green"><i class="tiny material-icons">camera_alt</i></label>
+                <input type="file" id="img" name="img" accept="image/*" (change) = "SelectImage($event)" style="display: none;">
+
+                <a (click) = "OpenProfileForm()" *ngIf="OpenProfileFormBtnClicked == false" class="btn-floating tooltipped btn-small waves-effect blue" 
+                    style="margin-left: 1rem;"><i class="tiny material-icons"> build </i>
+                </a>
+                <a (click) = "CloseProfileForm()" *ngIf="OpenProfileFormBtnClicked" class="btn-floating tooltipped btn-small waves-effect red" 
+                    style="margin-left: 1rem;"><i class="tiny material-icons"> close </i>
+                </a>
+            </div>
+            <div class="col s8">
+                <h3 class="profile__name">{{ CurrentUser.Username }}</h3>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <form class="col s12" [formGroup] = "Profile_Edit_Form" novalidate (ngSubmit) = "SubmitProfileEditForm()">
+                <div class="row">
+
+                    <div class="input-field col s12">
+                        <input id="first_name" 
+                            type="text" 
+                            class="validate profile__input" 
+                            pattern="[0-9a-zA-Z_.,]{5,}"
+                            formControlName = "Username">
+                        <label class="profile_input_label" for="first_name">Username</label>
+                        <span class="helper-text profile_input_label" data-error="wrong" data-success="right">Username Format</span>
+                    </div>
+
+                    <div class="input-field col s6">
+                        <input id="PhoneNumber" 
+                            pattern="[5-9]{1}[0-9]{9}"
+                            onKeyDown="if(this.value.length==10 && event.keyCode!=8) return false;"
+                            type="number" 
+                            class="validate profile__input" 
+                            value="{{ CurrentUser.PhoneNumber }}"
+                            (keydown) = "EditPhoneNumber()"
+                            formControlName = "PhoneNumber">
+                        <label class="profile_input_label" for="PhoneNumber">Phone Number</label>
+                        <span class="helper-text profile_input_label" data-error="wrong" data-success="right">PhoneNumber Format</span>
+                    </div>
+
+                    <div class="input-field col s6">
+                        <input id="Email" 
+                            type="email"
+                            formControlName = "Email" 
+                            pattern="^\S+@\S+$"
+                            class="validate profile__input">
+                        <label class="profile_input_label" for="Email">Email</label>
+                        <span class="helper-text profile_input_label" data-error="wrong" data-success="right">Email Format</span>
+                    </div>
+
+                    <h5>Gender</h5>
+                    <p>
+                        <label>
+                            <input name="Gender" 
+                                type="radio" 
+                                value="Male" 
+                                id="male" 
+                                formControlName = "Gender"
+                                class="profile__input" />
+                            <span>Male</span>
+                        </label>
+                    </p>
+                    <p>
+                        <label>
+                            <input name="Gender" 
+                                type="radio" 
+                                value="Female" 
+                                id="female" 
+                                formControlName = "Gender"
+                                class="profile__input" />
+                            <span>Female</span>
+                        </label>
+                    </p>
+                </div>
+
+                <div style="text-align: center;" *ngIf="saveChange && !OtpForm">
+                    <button [disabled]= "!Profile_Edit_Form.valid" class="waves-effect waves-light btn #01579b light-blue darken-4 enter_btn">Save Changes</button>
+                </div>
+
+            </form>
+
+            <form class="col s12" *ngIf="OtpForm" [formGroup] = "OTP_Form" novalidate (ngSubmit) = "SubmitOTPForm()" >
+                <h5> Submit OTP </h5>
+                <div class="input-field col s12">
+                    <input type="text" 
+                        onKeyDown="if(this.value.length==4 && event.keyCode!=8) return false;"
+                        pattern="\d{4}"
+                        id="otp" 
+                        formControlName = "otp"
+                        class="validate">
+                    <label class="profile_input_label" for="otp">OTP*</label>
+                </div>
+                <div style="text-align: center;">
+                    <button [disabled]= "!OTP_Form.valid" class="waves-effect waves-light btn #01579b light-blue darken-4 enter_btn">Change PhoneNumber</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="row">
+            <h5>User Address</h5>
+
+
+            <div class="col s12" *ngFor = "let address of CurrentUser.Adderss">
+                <div class="card address__card">
+                    <p>Address <span class="address__Number"> 1 </span> </p>
+                    <p> <span class="address_heading">Line 1 - </span> {{address.User_Address.Line1}} </p>
+                    <p> <span class="address_heading">Line 2 - </span> {{address.User_Address.Line2}} </p>
+                    <p> <span class="address_heading">City - </span> {{address.User_Address.City}} </p>
+                    <p> <span class="address_heading">Area - </span> {{address.User_Address.Area}} </p>
+                    <p> <span class="address_heading">State - </span> {{address.User_Address.State}} </p>
+                    <p> <span class="address_heading">Pincode - </span> {{address.User_Address.City}} - {{address.User_Address.Pincode}} </p>
+                    <p> <span class="address_heading">Landmark - </span> {{address.User_Address.Landmark}} </p>
+                    <div class="card-action" style="overflow: hidden;">
+                        <a class="waves-effect waves-light btn blue pull-right" (click) = "EditAddress(address)">Edit</a>
+                        <a class="waves-effect waves-light btn red pull-right" style="margin-right: 1rem;" (click) = "DeleteAddress(address)">Delete</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12" *ngIf = "CurrentUser.Adderss.length < 4">
+                <a class="waves-effect waves-light btn" style="font-size: 1.5rem;" (click) = "NavigateToAddressForm()" ><i class="material-icons">add</i> Add New Address </a>
+            </div>
+
+        </div>
+
+
+
+    </div>
+    
+</div>

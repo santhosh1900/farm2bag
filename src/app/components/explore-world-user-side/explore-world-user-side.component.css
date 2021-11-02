@@ -1,0 +1,14 @@
+.side__icon{
+    margin-top: 1rem;
+}
+.title{
+    margin-top: 1.5rem !important;
+}
+
+.avatar{
+    min-height: 64px !important;
+}
+
+.collection-item{
+    cursor: pointer;
+}

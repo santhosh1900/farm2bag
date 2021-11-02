@@ -1,0 +1,94 @@
+.report__style{
+    right: 90px;
+}
+
+.report__style2{
+    right: 24px !important;
+    transition: all .5s linear;
+}
+
+a{
+    cursor: pointer !important;
+}
+
+.card__img{
+    height: 20rem;
+}
+
+.ad__owner{
+    padding: 10px !important;
+    display: flex;
+    text-align: left;
+}
+
+.username{
+    margin: 1rem;
+    font-weight: bold;
+}
+
+.into__title{
+    font-size: 1.1rem;
+}
+
+.modal__time{
+    text-align: right;
+}
+
+.card-content-2{
+    padding: .9rem !important;
+}
+.time__style{
+    margin-left: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.card-content2{
+    padding: 7px;
+}
+
+.modal__content{
+    text-align: left;
+    word-break: break-all;
+}
+
+.modal__content .modal__username{
+    font-weight: bold;
+}
+
+#CommentModels{
+    min-height: 44rem;
+}
+
+.Comment__section{
+    max-height: 30rem;
+    overflow: scroll;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.Comment__section::-webkit-scrollbar{
+    display: none;
+}
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+.Comment__section{
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+
+.comment__input{
+    outline: none;
+    color: #0f0f0f !important;
+    border: none !important;
+    word-break: break-all;
+}
+
+.comment__input:focus{
+    outline: none !important;
+    border: none !important;
+}
+
+.cancel_btn{
+    display: none;
+}

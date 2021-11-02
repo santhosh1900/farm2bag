@@ -1,0 +1,18 @@
+.card__image{
+    height: 15.4rem !important;
+}
+
+.card-title{
+    color: #0f0f0f !important;
+    font-weight: bold;
+    background-color: rgba(93, 224, 104, .5);
+}
+
+.card-content{
+    height: 8rem !important;
+}
+
+.heading{
+    margin: 7rem 0 4rem;
+    white-space: nowrap;
+}

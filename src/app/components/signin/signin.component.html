@@ -1,0 +1,134 @@
+<div>
+    <div class="row" *ngIf="show_signup_form" style="margin-top: 20px;">
+        <form class="col s12" [formGroup] = "signinForm" novalidate (ngSubmit) = "SignInUser()">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="number" 
+                        pattern="[5-9]{1}[0-9]{9}"
+                        [(ngModel)]="phone"
+                        onKeyDown="if(this.value.length==10 && event.keyCode!=8) return false;"
+                        id="phone1" 
+                        name="phone" 
+                        class="validate" 
+                        formControlName = "MobileNumber">
+                    <label for="phone1" style="font-size: 1.5rem; color: red;">Mobile Number*</label> 
+                    <span class="error" *ngIf="!signinForm.controls['MobileNumber'].valid && signinForm.controls['MobileNumber'].touched">
+                        Enter a valid MobileNumber
+                    </span> <br>
+                    <span class="error" id="NumberExist"></span> 
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <button 
+                    class="waves-effect waves-light btn #01579b light-blue darken-4 enter_btn"
+                    [disabled]= "!signinForm.valid">Request OTP
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+
+    <div class="row" *ngIf="show_submit_otp_form">
+        <form class="col s12" [formGroup] = "otpForm" novalidate (ngSubmit) = "Submit_OTP()">
+            <div class="row">
+                <div class="input-field col s12">
+                        <input type="text" 
+                        pattern="\d{4}"
+                        maxlength="4"
+                        id="otp" 
+                        [(ngModel)]="otp"
+                        name="otp" 
+                        class="validate" 
+                        formControlName = "otp">
+                    <label for="otp" style="font-size: 1.5rem; color: red;">OTP*</label>
+                    <span class="error" id="wrong_otp" [ngClass] = "{ hide : !!otpForm.valid }">
+                        Only four digits number is allowed
+                    </span>
+                    <br>
+                    <br>
+                    <span class="blue" *ngIf="resendOTP" (click) = "resend_OTP()" style="cursor: pointer;">
+                       Resend OTP ?
+                    </span>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <button 
+                    class="waves-effect waves-light btn #01579b light-blue darken-4 enter_btn"
+                    [disabled] = "!otpForm.valid">
+                    Submit OTP
+                </button>
+            </div>
+        </form>
+        <span class="edit_mobile right" (click)="Edit_number()">Edit Mobile Number?</span>
+    </div>
+
+
+
+
+
+
+    <div class="row" *ngIf="Set_Profile">
+        <form class="col s12" [formGroup] = "ProfileForm" novalidate (ngSubmit) = "Profile_Submit()">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input 
+                        type="text"
+                        class="validate" 
+                        formControlName = "Username"
+                        name="Username"
+                        [(ngModel)]="Username"
+                        id="Username">
+                    <label for="Username" style="font-size: 1.5rem; color: red;">Username*</label>
+                    <span class="error" *ngIf= "!ProfileForm.controls['Username'].valid && ProfileForm.controls['Username'].touched">
+                        Username is required
+                    </span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <input 
+                        type="Password"
+                        class="validate" 
+                        formControlName = "Password"
+                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                        name="Password"
+                        [(ngModel)]="Password"
+                        id="Password">
+                    <label for="Password" style="font-size: 1.5rem; color: red;">Password*</label>
+                    <span class="error" *ngIf= "!ProfileForm.controls['Password'].valid">
+                        Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special characte
+                    </span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <input 
+                        type="Password"
+                        class="validate" 
+                        formControlName = "ConfirmPassword"
+                        name="ConfirmPassword"
+                        [(ngModel)]="ConfirmPassword"
+                        id="ConfirmPassword">
+                    <label for="ConfirmPassword" style="font-size: 1.5rem; color: red;">ConfirmPassword*</label>
+                    <span class="error" *ngIf= "ProfileForm.controls['ConfirmPassword'].value && ProfileForm.controls['ConfirmPassword'].value != ProfileForm.controls['Password'].value">
+                        New Password and Confirm Password Should Match
+                    </span>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <button 
+                    class="waves-effect waves-light btn #01579b light-blue darken-4 enter_btn"
+                    *ngIf="ProfileForm.valid && (ProfileForm.controls['ConfirmPassword'].value == ProfileForm.controls['Password'].value)"
+                    [disabled]= "!ProfileForm.valid || (ProfileForm.controls['ConfirmPassword'].value != ProfileForm.controls['Password'].value)">
+                    SetUp Profile
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+
+</div>

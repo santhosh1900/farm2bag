@@ -1,0 +1,70 @@
+<nav class="#00c853 green accent-4" id="mainNavbar">
+    <div class="container-fluid">
+        <div class="nav-wrapper">
+            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <!-- <a (click) = "NavigateToHomePage()" class="brand-logo center">Farm2Bag Sever Side</a> -->
+
+            <ul class="right hide-on-med-and-down nav__content">
+                <!-- Dropdown Trigger -->
+
+                <!-- *ngIf="!LoggedUser" -->
+                <li *ngIf="LoggedUser" > 
+                    <a class="dropdown-trigger" data-target="profile_dropdown1">
+                        <i class="fa fa-user fa-2x" aria-hidden="true"></i>
+                        <span class="fa-2x"> {{ LoggedUser.Username }}  </span>
+                    </a>
+                    <ul id="profile_dropdown1" class="dropdown-content profile_dropdown nav__content">
+                        <li> 
+                            <a style="color:#4caf50"> 
+                                <i class="fa fa-user" aria-hidden="true"></i> <span> Profile </span> 
+                            </a> 
+                        </li>
+
+                        <li class="divider"></li>
+
+                        <li> 
+                            <a style="color : #4caf50" (click)="logout()"> 
+                                <i class="fa fa-sign-out" aria-hidden="true" ></i> <span> Logout </span> 
+                            </a> 
+                        </li>
+
+                        <li class="divider"></li>
+
+                    </ul>
+                </li>
+        
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+
+<ul id="slide-out" class="sidenav nav__content" style="width: 85%; z-index: 999999;">
+
+    <li *ngIf="LoggedUser" > 
+        <a class="dropdown-trigger" data-target="profile_dropdown2">
+            <i class="fa fa-user fa-2x" aria-hidden="true"></i>
+            <span class="fa-2x"> {{ LoggedUser.Username }}  </span>
+        </a>
+        <ul id="profile_dropdown2" class="dropdown-content dropdown-content2 nav__content">
+            <li (click)="NavigateToProfilePage()"> 
+                <a> 
+                    <i class="fa fa-user" aria-hidden="true"></i> <span> Profile </span> 
+                </a> 
+            </li>
+
+            <li class="divider"></li>
+
+            <li> 
+                <a (click)="logout()"> 
+                    <i class="fa fa-sign-out" aria-hidden="true"></i> <span> Logout </span> 
+                </a> 
+            </li>
+
+            <li class="divider"></li>
+        </ul>
+    </li>
+    
+</ul>

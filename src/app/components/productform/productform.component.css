@@ -1,0 +1,19 @@
+.mrb4{
+    margin-bottom: 4rem;
+    text-align: center;
+}
+.heading{
+    color: rgb(92, 208, 92) !important;
+    font-size: 1.4rem;
+    font-weight: bold;
+    background-color: transparent !important;
+}
+
+.tabs .indicator{
+    background-color: black !important;
+}
+
+.actions{
+    font-weight: bold;
+    cursor: pointer;
+}

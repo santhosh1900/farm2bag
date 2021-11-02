@@ -1,0 +1,35 @@
+.heading{
+    font-weight: bold;
+    font-size: 35px;
+    text-align: center;
+}
+
+.hide{
+    display: none !important;
+}
+
+#profile__image{
+    height: 12rem;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.profile__name{
+    text-align: center;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+input[type="text"],input[type="email"],input[type="number"]
+{
+    font-size:18px;
+    font-weight: bold;
+}
+
+.address__card{
+    padding: 12.3px;
+}
+
+.address_heading{
+    
+}

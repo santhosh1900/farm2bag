@@ -1,0 +1,38 @@
+<div>
+    <app-navbar
+    [Explore]           = "explore"
+    (messsageEvent) 	= "receiveLoaction($event)"
+    ></app-navbar>
+
+    <div>
+        <div class="row" id="holder">
+            <div class="col s12 m12 l4">
+                <app-explore-world-user-side
+                (AdEvent) 	    = "receiveAd($event)"
+                (DelyaLoader)   = "receiveDelay($event)"
+                ></app-explore-world-user-side>
+            </div>
+
+            <div class="col s12 m12 l8">
+                <div class="container">
+                    <div class="row">
+                        <div class="col s12 center-align ads_holder_style" *ngIf = "FarmerSection">
+                            <app-farmer-ads
+                            [Location] = "Location"
+                            [Delay]    = "Delay"
+                            ></app-farmer-ads>
+                        </div>
+                        <div class="col s12 center-align ads_holder_style" *ngIf = "!FarmerSection">
+                            <app-wholesale-ads
+                            [Location] = "Location"
+                            [Delay]    = "Delay"
+                            ></app-wholesale-ads>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

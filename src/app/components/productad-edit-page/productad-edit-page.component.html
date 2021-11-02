@@ -1,0 +1,282 @@
+<div>
+    <app-sellnav></app-sellnav>
+    <h4 class="center-align heading">Advertisement Edit</h4>
+
+    <div>
+        <div class="row" *ngIf = "!Loader">
+            <div class="col s3"></div>
+            <!-- [formGroup] = "ProductForm" novalidate (ngSubmit) = "SubmitProductForm()" -->
+            <form class="col s6 card" style="padding: 1rem;" [formGroup] = "ProductForm" novalidate (ngSubmit) = "SubmitProductEditForm()">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input
+                        (change) = "Allowsubmit()"  
+                        formControlName = "Username"
+                        id="username" 
+                        type="text" 
+                        readonly
+                        class="validate">
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="input-field col s12">
+                    <input
+                    (change) = "Allowsubmit()" 
+                    pattern="^[a-zA-Z][\w\s-]+" 
+                    formControlName = "Name"
+                    id="productname" 
+                    type="text" 
+                    class="validate">
+                    <label for="productname">Company Name</label>
+                    </div>
+                </div>
+    
+                <div class="file-field input-field">
+                    <div class="btn #5e35b1 deep-purple darken-1">
+                    <span>Comapany Poster</span>
+                    <input 
+                    class="poster__input"
+                    (change) = "ChangePosterImage($event)"
+                    accept="image/x-png,image/gif,image/jpeg"
+                    type="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                    <input class="file-path validate poster__input" type="text">
+                    </div>
+                    <small style="color: #e53935;">* Required</small>
+                </div>
+
+                <div class="card mb1">
+                    <div class="card-image">
+                        <img class="media__card__image" id="poster__image" src="{{ AdInfo.ImageUrl }}">
+                        <a *ngIf = "PosterData && !btnclicked" 
+                        (click) = "UploadPosterImage()"
+                        class="btn-floating halfway-fab waves-effect waves-light green">
+                            <i class="material-icons">archive</i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="file-field input-field">
+                    <div class="btn #5e35b1 deep-purple darken-1">
+                    <span>Address Proff</span>
+                    <input 
+                    class="proff__input"
+                    (change) = "ChangeProffImage($event)"
+                    accept="image/x-png,image/gif,image/jpeg"
+                    type="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                    <input class="file-path validate proff__input" type="text">
+                    </div>
+                    <small style="color: #e53935;">* Required</small>
+                </div>
+
+                <div class="card mb1">
+                    <div class="card-image">
+                        <img class="media__card__image" id="proff__image" src="{{ AdInfo.AddressProffUrl }}">
+                        <a *ngIf = "ProffData && !btnclicked"
+                        (click) = "UploadProffImage()" 
+                        class="btn-floating halfway-fab waves-effect waves-light green">
+                            <i class="material-icons">archive</i>
+                        </a>
+                    </div>
+                </div>
+
+
+                <div class="file-field input-field">
+                    <div class="btn #039be5 light-blue darken-1">
+                    <span>Comapany Video</span>
+                    <input 
+                    class="video__input"
+                    (change) = "ChangeVideo($event)"   
+                    accept="video/*"
+                    type="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                    <input class="file-path validate video__input" type="text">
+                    </div>
+                    <small style="color: #e53935;">* Not Required</small><br>
+                    <small style="color: #e53935;">* Video Size Must be less than 30MB</small>
+                </div>
+
+
+
+                <div class="card">
+                    <div class="card-image">
+                        <video 
+                        *ngIf = "AdInfo.VideoUrl || VideoData"
+                        controls="controls" 
+                        id="video_" 
+                        controlsList="nodownload" 
+                        style="width: 100%; height: 100%;" 
+                        src="{{ AdInfo.VideoUrl }}">
+                        </video>
+
+                        <a *ngIf = "VideoData && !btnclicked"
+                        (click) = "UploadVideo()" 
+                        class="btn-floating halfway-fab waves-effect waves-light green">
+                            <i class="material-icons">archive</i>
+                        </a>
+                    </div>
+                </div>
+                
+
+                <div class="row" *ngIf = "!AdInfo.VideoUrl">
+                    <div class="input-field col s12">
+                        <small style="color: #e53935;">No Video Found</small><br>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 2rem;">
+                    <div class="input-field col s12">
+                    <textarea 
+                    id="textarea2"
+                    (change) = "Allowsubmit()"
+                    class="materialize-textarea" 
+                    formControlName = "ProductDesc"
+                    data-length="120"></textarea>
+                    <label for="textarea2">Your Company Description</label>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="input-field col s12">
+                    <input
+                    (change) = "Allowsubmit()" 
+                    formControlName = "Line1"
+                    pattern="^[a-zA-Z][\w\s-]+"
+                    id="Address_Line_1" 
+                    type="text" 
+                    class="validate">
+                    <label for="Address_Line_1">Company Address Line 1</label>
+                    </div>
+                    <small style="color: #e53935;">Each Line Should Start Only With Alphabet [A-Z or a-z]</small><br>
+                </div>
+    
+                <div class="row">
+                    <div class="input-field col s12">
+                    <input
+                    (change) = "Allowsubmit()"  
+                    pattern="^[a-zA-Z][\w\s-]+" 
+                    formControlName = "Line2" 
+                    id="Address_Line_2" 
+                    type="text" 
+                    class="validate">
+                    <label for="Address_Line_2">Company Address Line 2</label>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <label style="margin-left: 1rem;">Select City</label>
+                    <div class="input-field col s12">
+                        <select formControlName = "City" (change) = "Allowsubmit()" class="browser-default" style="border: 1px solid #3f3f3f;">
+                        <option value="Chennai">Chennai</option>
+                        <option value="Erode">Erode</option>
+                        <option value="Karur">Karur</option>
+                        <option value="Trippur">Trippur</option>
+                        <option value="Coimbatore">Coimbatore</option>
+                        <option value="Salem">Salem</option>
+                        <option value="Namakkal">Namakkal</option>
+                        </select>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="input-field col s12">
+                    <input  
+                    id="Area" 
+                    formControlName = "Area"
+                    (change) = "Allowsubmit()"
+                    type="text" 
+                    pattern="^[a-zA-Z][\w\s-]+"  
+                    class="validate">
+                    <label for="Area">Area</label>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="input-field col s12">
+                    <input 
+                    id="State" 
+                    pattern="^[a-zA-Z][\w\s-]+"
+                    formControlName = "State"
+                    (change) = "Allowsubmit()"
+                    type="text" 
+                    class="validate">
+                    <label for="State">State</label>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="input-field col s12">
+                    <input 
+                    pattern="\d{6}"
+                    formControlName = "Pincode"
+                    (change) = "Allowsubmit()" 
+                    id="Pincode" 
+                    type="number" 
+                    class="validate">
+                    <label for="Pincode">Pincode</label>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="input-field col s12">
+                    <input 
+                    id="Landmark" 
+                    formControlName = "Landmark"
+                    (change) = "Allowsubmit()"
+                    type="text" 
+                    pattern="^[a-zA-Z][\w\s-]+"
+                    class="validate">
+                    <label for="Landmark">Landmark</label>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col s12">
+                        <button 
+                        class="btn waves-effect waves-light" 
+                        [disabled] = "!Submit || !ProductForm.valid"
+                        type="submit" 
+                        name="action" 
+                        style="width: 100%;">Submit Ad
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+       </div>
+
+
+       <div *ngIf = "Loader">
+            <div class="row" style="margin-top: 20rem;">
+                <div class="col s4"></div>
+                <div class="col s4 center-align mrb4">
+                    <div class="preloader-wrapper big active">
+                        <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                            <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s4"></div>
+            </div>
+        </div> 
+
+
+    </div>
+
+
+
+
+
+
+</div>

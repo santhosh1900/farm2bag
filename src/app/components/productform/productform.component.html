@@ -1,0 +1,391 @@
+<div>
+
+    <h5 class="mrb4">Your Product's Informations</h5>
+    
+
+    <div class="row">
+        <div class="col s12" class="mrb4">
+          <ul class="tabs">
+            <li class="tab col s6"><a href="#farmer" (click) = "DiplayFarmer()" class="heading">Farmer</a></li>
+            <li class="tab col s6"><a class="active" (click) = "DiplayProduct()" class="heading" href="#Wholesale_or_bulkproduct_transporter">Wholesaler or Bulk Product Transporter</a></li>
+          </ul>
+          <div>
+            <small> *Farmer's product is directly posted without any verifications </small><br>
+            <small> *Advertising fake or false product may lead to block your account </small><br>
+            <small> *You Can Only Post One Ad In Each Category </small>
+          </div>
+        </div>
+
+        <div id="farmer" class="col s12" *ngIf  = "FarmerFormDisplay">
+            <div *ngIf="!FarmerAddExists && !Loader">
+                <div class="row">
+                    <div class="col s3"></div>
+                    <form class="col s6 card" style="padding: 1rem;" [formGroup] = "FarmerProductForm" novalidate (ngSubmit) = "SubmitFarmerProductForm()">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input  
+                                formControlName = "Username"
+                                readonly 
+                                id="username" 
+                                type="text" 
+                                >
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <input  
+                            formControlName = "Name" 
+                            id="name" 
+                            type="text" 
+                            class="validate">
+                            <label for="name">Title</label>
+                            </div>
+                        </div>
+            
+                        <div class="file-field input-field">
+                            <div class="btn #5e35b1 deep-purple darken-1">
+                              <span>Product Image</span>
+                              <input 
+                              (change) = "SelectImage($event)"
+                              class="image__input"
+                              accept="image/x-png,image/gif,image/jpeg"
+                              type="file">
+                            </div>
+                            <div class="file-path-wrapper">
+                              <input class="file-path validate image__input" type="text">
+                            </div>
+                            <small style="color: #e53935;">* Required</small>
+                        </div>
+    
+    
+                        <div class="file-field input-field">
+                            <div class="btn #039be5 light-blue darken-1">
+                              <span>Product Video</span>
+                              <input 
+                              (change) = "SelectVideo($event)"
+                              class="video__input"   
+                              accept="video/*"
+                              type="file">
+                            </div>
+                            <div class="file-path-wrapper">
+                              <input class="file-path validate video__input" type="text">
+                            </div>
+                            <small style="color: #e53935;">* Not required</small><br>
+                            <small style="color: #e53935;">* Video Size Must be less than 30MB</small>
+                        </div>
+    
+                        <div class="row">
+                            <div class="input-field col s12">
+                              <textarea 
+                                id="textarea2" 
+                                class="materialize-textarea" 
+                                formControlName = "ProductDesc"
+                                data-length="120"></textarea>
+                              <label for="textarea2">Your Farm Product Description</label>
+                            </div>
+                        </div>
+            
+                        <div class="row">
+                            <label style="margin-left: 1rem;">Select City</label>
+                            <div class="input-field col s12">
+                                <select formControlName = "City" class="browser-default" style="border: 1px solid #3f3f3f;">
+                                  <option value="Chennai">Chennai</option>
+                                  <option value="Erode">Erode</option>
+                                  <option value="Karur">Karur</option>
+                                  <option value="Trippur">Trippur</option>
+                                  <option value="Coimbatore">Coimbatore</option>
+                                  <option value="Salem">Salem</option>
+                                  <option value="Namakkal">Namakkal</option>
+                                </select>
+                            </div>
+                        </div>
+            
+                        <div class="row">
+                            <div class="col s12">
+                                <button 
+                                class="btn waves-effect waves-light" 
+                                [disabled]= "!FarmerProductForm.valid || !ImageData" 
+                                type="submit" name="action" 
+                                style="width: 100%;">Post Ad
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+
+
+            <div *ngIf = "FarmerAddExists && !Loader">
+                <div class="row">
+                    <div class="col s3"></div>
+                    <div class="col s6 card">
+                        <div class="card-content">
+                            <span class="card-title">Advertisement Already Exists</span>
+                            <p>Your Ad On Food Products is Already Exists , Please Delete Previous Ads to Create A New One </p> 
+                            <p>You Can Also Edit Your Previous Ad</p>
+                        </div>
+                        <div class="card-action">
+                            <a class="actions" (click) = "FarmAdEditPage()">Edit Add</a>
+                            <a class="actions" style="color: #e53935;" (click) = "DeleteFarmerAd()" >Delete Add</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf = "Loader">
+                <div class="row">
+                    <div class="col s4"></div>
+                    <div class="col s4 center-align mrb4">
+                        <div class="preloader-wrapper big active">
+                            <div class="spinner-layer spinner-blue-only">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div><div class="gap-patch">
+                                <div class="circle"></div>
+                                </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s4"></div>
+                </div>
+            </div>    
+
+        </div> 
+        
+        
+
+        <div id="Wholesale_or_bulkproduct_transporter" class="col s12" *ngIf  = "ProductFormDisplay">
+
+
+            <div *ngIf = "!WholesaleAdExists && !Loader">
+                <div class="row">
+                    <div class="col s3"></div>
+                    <form class="col s6 card" style="padding: 1rem;" [formGroup] = "ProductForm" novalidate (ngSubmit) = "SubmitProductForm()">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input 
+                                pattern="[0-9a-zA-Z_.,]{5,}" 
+                                formControlName = "Username" 
+                                id="username" 
+                                type="text" 
+                                readonly
+                                class="validate">
+                            </div>
+                        </div>
+            
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <input  
+                            formControlName = "ProdcutName" 
+                            pattern="^[a-zA-Z][\w\s-]+"
+                            id="productname" 
+                            type="text" 
+                            class="validate">
+                            <label for="productname">Company Name</label>
+                            </div>
+                        </div>
+            
+                        <div class="file-field input-field">
+                            <div class="btn #5e35b1 deep-purple darken-1">
+                            <span>Comapany Poster</span>
+                            <input 
+                            (change) = "SelectImage($event)"
+                            class="image__input"
+                            accept="image/x-png,image/gif,image/jpeg"
+                            type="file">
+                            </div>
+                            <div class="file-path-wrapper">
+                            <input class="file-path validate image__input" type="text">
+                            </div>
+                            <small style="color: #e53935;">* Required</small>
+                        </div>
+
+                        <div class="file-field input-field">
+                            <div class="btn #5e35b1 deep-purple darken-1">
+                            <span>Address Proff</span>
+                            <input 
+                            (change) = "SelectAddressProffImage($event)"
+                            class="image__input"
+                            accept="image/x-png,image/gif,image/jpeg"
+                            type="file">
+                            </div>
+                            <div class="file-path-wrapper">
+                            <input class="file-path validate image__input" type="text">
+                            </div>
+                            <small style="color: #e53935;">* Required</small>
+                        </div>
+
+
+                        <div class="file-field input-field">
+                            <div class="btn #039be5 light-blue darken-1">
+                            <span>Comapany Video</span>
+                            <input 
+                            (change) = "SelectVideo($event)"
+                            class="video__input"   
+                            accept="video/*"
+                            type="file">
+                            </div>
+                            <div class="file-path-wrapper">
+                            <input class="file-path validate video__input" type="text">
+                            </div>
+                            <small style="color: #e53935;">* Not Required</small><br>
+                            <small style="color: #e53935;">* Video Size Must be less than 30MB</small>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <textarea 
+                            id="textarea2"
+                            formControlName = "ProductDesc" 
+                            class="materialize-textarea" 
+                            data-length="120"></textarea>
+                            <label for="textarea2">Your Company Description</label>
+                            </div>
+                        </div>
+            
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <input 
+                            formControlName = "Line1" 
+                            pattern="^[a-zA-Z][\w\s-]+"  
+                            id="Address_Line_1" 
+                            type="text" 
+                            class="validate">
+                            <label for="Address_Line_1">Company Address Line 1</label>
+                            </div>
+                        </div>
+            
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <input formControlName = "Line2" 
+                            pattern="^[a-zA-Z][\w\s-]+"  
+                            id="Address_Line_2" 
+                            type="text" 
+                            class="validate">
+                            <label for="Address_Line_2">Company Address Line 2</label>
+                            </div>
+                        </div>
+            
+                        <div class="row">
+                            <label style="margin-left: 1rem;">Select City</label>
+                            <div class="input-field col s12">
+                                <select formControlName = "City" class="browser-default" style="border: 1px solid #3f3f3f;">
+                                <option value="Chennai">Chennai</option>
+                                <option value="Erode">Erode</option>
+                                <option value="Karur">Karur</option>
+                                <option value="Trippur">Trippur</option>
+                                <option value="Coimbatore">Coimbatore</option>
+                                <option value="Salem">Salem</option>
+                                <option value="Namakkal">Namakkal</option>
+                                </select>
+                            </div>
+                        </div>
+            
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <input formControlName = "Area" 
+                            id="Area" 
+                            type="text" 
+                            pattern="^[a-zA-Z][\w\s-]+"  
+                            class="validate">
+                            <label for="Area">Area</label>
+                            </div>
+                        </div>
+            
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <input formControlName = "State"
+                            pattern="^[a-zA-Z][\w\s-]+" 
+                            id="State" 
+                            type="text" 
+                            class="validate">
+                            <label for="State">State</label>
+                            </div>
+                        </div>
+            
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <input formControlName = "Pincode"
+                            pattern="\d{6}" 
+                            id="Pincode" 
+                            type="number" 
+                            class="validate">
+                            <label for="Pincode">Pincode</label>
+                            </div>
+                        </div>
+            
+                        <div class="row">
+                            <div class="input-field col s12">
+                            <input formControlName = "Landmark" 
+                            id="Landmark" 
+                            type="text" 
+                            pattern="^[a-zA-Z][\w\s-]+" 
+                            class="validate">
+                            <label for="Landmark">Landmark</label>
+                            </div>
+                        </div>
+            
+                        <div class="row">
+                            <div class="col s12">
+                                <button 
+                                class="btn waves-effect waves-light" 
+                                [disabled]= "!ProductForm.valid || !ImageData || !AddressProffData" 
+                                type="submit" 
+                                name="action" 
+                                style="width: 100%;">Submit Ad
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+               </div>
+            </div>
+
+            <div *ngIf = "WholesaleAdExists && !Loader">
+                <div class="row">
+                    <div class="col s3"></div>
+                    <div class="col s6 card">
+                        <div class="card-content">
+                            <span class="card-title">Advertisement Already Exists</span>
+                            <p>Ad On Your Comapny  is Already Exists , Please Delete Previous Ads to Create A New One </p> 
+                            <p>You Can Also Edit Your Previous Ad</p>
+                        </div>
+                        <div class="card-action">
+                            <a class="actions" (click) = "WholesaleAdEditPage()">Edit Add</a>
+                            <a class="actions" style="color: #e53935;" (click) = "DeleteWholesaleAd()" >Delete Add</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf = "Loader">
+                <div class="row">
+                    <div class="col s4"></div>
+                    <div class="col s4 center-align mrb4">
+                        <div class="preloader-wrapper big active">
+                            <div class="spinner-layer spinner-blue-only">
+                                <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                </div><div class="gap-patch">
+                                <div class="circle"></div>
+                                </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s4"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+</div>

@@ -1,0 +1,263 @@
+<div>
+    <div class="row" style="min-height: 150vh;">
+
+        <div class="col s12" *ngIf = "!Loader && !DelayLoader">
+            <div class="card">
+                <div class="card-content ad__owner">
+                    <img src="https://images.unsplash.com/photo-1574943320219-553eb213f72d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=982&q=80" style="height: 4rem;width: 4rem;" alt="" class="circle">
+                    <span class="card-title left-align username"> FARM2BACK </span>
+                </div>
+                <div class="card-image">
+                    <img class="card__img" src="https://images.unsplash.com/photo-1574943320219-553eb213f72d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=982&q=80">
+                </div>
+                <div class="card-content card-content-2">
+                    <span class="card-title left-align username into__title">Welcome TO Farm2Back Farmer Ads Section</span>
+                    <p> Farmers Around Your Location Posted The Latest Infortion About Their Vegitables , Fruits and Other Product That They Are Intended To Sell in Bulk or Small Proportion </p>
+                </div>
+            </div>
+
+
+            <div *ngFor = "let ad of FarmersAds">
+                <div class="card" *ngIf="!ad.VideoUrl">
+                    <div class="card-content ad__owner">
+                        <img src="{{ ad.UserId.ProfilePic }}" style="height: 4rem;width: 4rem;" alt="" class="circle">
+                        <span class="card-title left-align username">{{ ad.UserId.Username }}</span>
+                    </div>
+                    <div class="card-image">
+                        <img class="card__img" src="{{ ad.ImageUrl }}">
+                        <a 
+                        class="btn-floating halfway-fab waves-effect waves-light green tooltipped"
+                        data-position="top"
+                        data-tooltip="Mark as Viewed ?"
+                        *ngIf = "!CheckInViews(ad.Views , CurrentUser._id)"
+                        (click) = "ViewTheAd(ad._id)"
+                        >
+                            <i class="material-icons">remove_red_eye</i>
+                        </a>
+                        <a 
+                        class="btn-floating halfway-fab waves-effect waves-light red report__style tooltipped"
+                        data-position="bottom"
+                        [ngClass]="{'report__style2' : CheckInViews(ad.Views , CurrentUser._id)}"
+                        data-tooltip="Report Ad ?"
+                        >
+                            <i class="material-icons">report_problem</i>
+                        </a>
+                    </div>
+                    <div class="left-align time__style" >
+                        <small>{{ GetTime(ad.Created) }}</small>
+                    </div>
+
+                    <div class="left-align time__style">
+                        <small>{{ ad.ViewsCount }} Views</small>
+                    </div>
+
+                    <div class="left-align time__style">
+                        <a (click) = "OpenModal(ad._id)">
+                            <small>{{ ad.CommentsCount }} Comments</small>
+                        </a>
+
+                        <a class="pull-right" style="margin-right: 1rem;" *ngIf = "CurrentUser._id != ad.UserId._id"  (click) = "ChatPage(ad.UserId._id)">
+                            <small> <i class="fa fa-commenting-o" aria-hidden="true"></i> Chat With Farmer </small>
+                        </a>
+
+                    </div>
+
+                    <div class="card-content card-content-2">
+                        <span class="card-title left-align">{{ ad.Name }}</span>
+                        <p>{{ ad.ProductDescription }}</p>
+                    </div>
+                </div>
+
+                <div class="card" *ngIf = "ad.VideoUrl">
+                    <div class="card-content ad__owner">
+                        <img src="{{ ad.UserId.ProfilePic }}" style="height: 4rem;width: 4rem;" alt="" class="circle">
+                        <span class="card-title left-align username">{{ ad.UserId.Username }}</span>
+                    </div>
+                    <div class="card-tabs">
+                    <ul class="tabs tabs-fixed-width">
+                        <li class="tab"><a href="#image{{ad._id}}">Poster</a></li>
+                        <li class="tab"><a href="#video{{ad._id}}">Video</a></li>
+                    </ul>
+                    </div>
+                    <div class="card-content grey lighten-4" style="padding: 1rem;">
+                        <div id="image{{ad._id}}">
+                            <div class="card-image">
+                                <img class="card__img" src="{{ ad.ImageUrl }}">
+                                <a 
+                                class="btn-floating halfway-fab waves-effect waves-light green tooltipped"
+                                data-position="top"
+                                (click) = "ViewTheAd(ad._id)"
+                                *ngIf = "!CheckInViews(ad.Views , CurrentUser._id)"
+                                data-tooltip="Mark as Viewed ?">
+                                    <i class="material-icons">remove_red_eye</i>
+                                </a>
+                                <a 
+                                class="btn-floating halfway-fab waves-effect waves-light red report__style tooltipped"
+                                data-position="bottom"
+                                [ngClass]="{'report__style2' : CheckInViews(ad.Views , CurrentUser._id)}"
+                                data-tooltip="Report Ad ?">
+                                    <i class="material-icons">report_problem</i>
+                                </a>
+                            </div>
+                        </div>
+                        <div id="video{{ad._id}}">
+                            <div class="card-image">
+                                <video
+                                controls="controls" 
+                                controlsList="nodownload" 
+                                style="width: 100%; height: 20rem"  
+                                class="card__img" 
+                                src="{{ ad.VideoUrl }}">
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="left-align time__style" >
+                        <small>{{ GetTime(ad.Created) }}</small>
+                    </div>
+
+                    <div class="left-align time__style" >
+                        <small>{{ ad.ViewsCount }} Views</small>
+                    </div>
+
+                    <div class="left-align time__style">
+                        <a (click) = "OpenModal(ad._id)">
+                            <small>{{ ad.CommentsCount }} Comments</small>
+                        </a>
+
+                        <a class="pull-right" style="margin-right: 1rem;" *ngIf = "CurrentUser._id != ad.UserId._id"  (click) = "ChatPage(ad.UserId._id)">
+                            <small> <i class="fa fa-commenting-o" aria-hidden="true"></i> Chat With Farmer </small>
+                        </a>
+
+                    </div>
+                    
+                    <div class="card-content card-content-2">
+                        <span class="card-title left-align">{{ ad.Name }}</span>
+                        <p>{{ ad.ProductDescription }}</p>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="col s12" *ngIf = "Loader || DelayLoader" style="margin-top: 10rem;">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+        
+                <div class="spinner-layer spinner-red">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+        
+                <div class="spinner-layer spinner-yellow">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+        
+                <div class="spinner-layer spinner-green">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div><div class="gap-patch">
+                    <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+                </div>
+            </div>    
+        </div>
+    </div>
+
+
+    <!-- Modal Structure -->
+    <div id="CommentModels" class="CommentModels modal">
+        <div class="modal-content">
+
+            <div class="row" *ngIf = "CommentLoader">
+                <div class="col s12 center-align">
+                    <div class="preloader-wrapper big active">
+                        <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                                <div class="circle"></div>
+                            </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngIf = "!CommentLoader">
+                <form class="col s12" [formGroup] = "CommentForm" novalidate (ngSubmit) = "SubmitForm()">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">art_track</i>
+                            <input formControlName = "Comment" id="icon_prefix" type="text"class="validate">
+                            <label for="icon_prefix">Comment Box</label>
+                        </div>
+                        <button class="btn blue" [disabled] = "!CommentForm.valid || CommentBtnClicked" >Submit</button>
+                    </div>
+                </form>
+
+                <div class="col s12 Comment__section">
+                    <ul class="collection">
+
+                        <li class="collection-item avatar" *ngFor = "let comment of CommentsArray">
+                            <img src="{{ comment.UserId.ProfilePic }}" alt="" class="circle">
+                            <div class="modal__content">
+                                <div class="modal__username row">
+                                    <p class="col s6"> {{comment.UserId.Username}} </p>
+                                    <p class="col s6 modal__time {{ 'time' + comment._id.substring( comment._id.length - 5 ) }}">{{ GetTime(comment.Created) }}</p>
+                                </div>
+                                <textarea 
+                                    class="comment__input materialize-textarea {{ 'com' + comment._id.substring( comment._id.length - 5 ) }}" 
+                                    type="text" 
+                                    readonly 
+                                    value="{{ comment.Text }}">
+                                </textarea>
+                            </div>
+                            <div class="right-align" *ngIf = "comment.UserId._id == CurrentUser._id">
+
+                                <samll class="btn small red" 
+                                (click) = DeleteComment(comment._id)>Delete</samll>
+
+                                <samll class="btn orange {{ 'btn' + comment._id.substring( comment._id.length - 5 ) }}" 
+                                style="margin-left: 1rem;" 
+                                (click) = "UpdateComment(comment._id , comment.Text)" >Update</samll>
+
+                                <samll 
+                                class="btn orange cancel_btn {{ 'cancel' + comment._id.substring( comment._id.length - 5 ) }}" 
+                                (click) = "CancelUpdate(comment._id)" 
+                                style="margin-left: 1rem;">Cancel</samll>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

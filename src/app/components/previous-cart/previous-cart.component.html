@@ -1,0 +1,44 @@
+<div>
+    <h4 class="heading">Your Previous Orders</h4>
+
+    <app-profilepageloader *ngIf="Loader"></app-profilepageloader>
+
+    <br>
+
+    <div class="row" *ngIf="!Loader">
+
+        <div class="col s12" *ngIf = "PreviousCarts.length > 0">
+            <div class="card" *ngFor = "let item of PreviousCarts">
+                <div class="card-content">
+                    <p class="card-title"> {{item.Cart.length}} Items Purchased <span class="pull-right">{{ TimeFromNow(item.Created) }}</span> </p>
+                    <p class="order__list__heading">Order List :</p>
+                    <br>
+                    <div class="row">
+                        <div class="col s2 m2 order__list" *ngFor = "let vegi of item.Cart">
+                            {{ vegi.Vegitable.name }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-action row">
+                    <a class="options" style="cursor: pointer;">₹ {{ item.GrandTotal }}</a>
+                    <a style="cursor: pointer;" (click) = "MoreDetails(item)" class="moredetails options">More Details</a>
+                    <a style="cursor: pointer;" *ngIf = "!item.Delivered" (click) = "CancelOrder(item)" class="cancel_order options">Cancel Order</a>
+                    <a *ngIf = "item.Delivered" class="item_delivered options">Item Delivered</a>
+                    <a *ngIf = "item.Delivered" class="item_delivered options">Buy Again</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col s12" *ngIf = "PreviousCarts.length == 0">
+            <h5><center>You Haven't Purchased Anything</center></h5>
+        </div>
+
+
+    </div>
+
+
+
+
+
+</div>

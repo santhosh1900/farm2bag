@@ -1,0 +1,10 @@
+#mainNavbar{
+    position: fixed;
+    top: 0;
+    z-index: 9999;
+    white-space: nowrap;
+}
+
+#slide-out{
+    z-index: 99999;
+}

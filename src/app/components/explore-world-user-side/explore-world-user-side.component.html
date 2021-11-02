@@ -1,0 +1,47 @@
+<div id="user__panel">
+    <ul class="collection row" *ngIf = "!Loader">
+
+        <li class="collection-item avatar col s4 m4 l12">
+          <img src="{{ CurretnUser.ProfilePic }}" alt="" class="circle side__icon">
+          <p class="title">{{ CurretnUser.Username }}</p>
+        </li>
+
+        <li class="collection-item avatar col s4 m4 l12">
+          <i class="material-icons circle green side__icon">home</i>
+          <p class="title">Home</p>
+        </li>
+          
+        <li class="collection-item avatar col s4 m4 l12" (click) = "AdSelectFarmer()">
+          <i class="fa fa-audio-description material-icons circle green side__icon" aria-hidden="true"></i>
+          <p class="title">Farms Ads <i *ngIf = "FarmerSelected" class="fa fa-hand-o-left" aria-hidden="true"></i> </p>
+        </li>
+
+        <li class="collection-item avatar col s4 m4 l12" (click) = "AdSelectWholesale()">
+          <i class="fa fa-audio-description material-icons circle green side__icon" aria-hidden="true"></i>
+          <p class="title">Wholesale Ads <i *ngIf = "!FarmerSelected" class="fa fa-hand-o-left" aria-hidden="true"></i> </p>
+        </li>
+    </ul>
+    
+    <div *ngIf = "Loader" style="margin-top: 7.5rem;">
+      <div class="row">
+          <div class="col s4"></div>
+          <div class="col s4 center-align mrb4">
+              <div class="preloader-wrapper big active">
+                  <div class="spinner-layer spinner-blue-only">
+                      <div class="circle-clipper left">
+                          <div class="circle"></div>
+                      </div><div class="gap-patch">
+                      <div class="circle"></div>
+                      </div><div class="circle-clipper right">
+                      <div class="circle"></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col s4"></div>
+      </div>
+    </div>
+
+    
+
+</div>

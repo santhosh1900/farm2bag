@@ -1,0 +1,23 @@
+.slide__right{
+    transition: all 0.2s linear;
+    cursor: pointer;
+    border: none !important;
+    font-size: 15px;
+}
+
+.slide__right:hover{
+    transform: translateX(15px);
+    font-weight: bold;
+    color: red;
+}
+
+
+.Active{
+    font-weight: bold;
+    color: red;
+}
+
+.InActive{
+    font-weight: normal;
+    color: black;
+}

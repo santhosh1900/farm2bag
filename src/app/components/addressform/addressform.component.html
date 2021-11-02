@@ -1,0 +1,200 @@
+<div>
+    <app-navbar ></app-navbar>
+
+    <div class="row" style="min-height: 100vh;" *ngIf="!going_to_edit"> 
+        <div class="col s3">
+            <p></p>
+        </div>
+
+        <div class="col s6 m6">
+            <!-- <h5>Update Address</h5> -->
+            <h5 style="text-align: center;">New Address</h5>
+            <form class="col s12" [formGroup] = "AddressForm" novalidate (ngSubmit) = "SubmitAddressForm()">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="Line1" 
+                            type="text"
+                            formControlName = "Line1" 
+                            class="validate"
+                            pattern=".{5,}">
+                        <label for="Line1">Line 1</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="Line2" 
+                            type="text"
+                            formControlName = "Line2" 
+                            class="validate"
+                            pattern=".{5,}">
+                        <label for="Line2">Line 2</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="State" 
+                            type="text"
+                            formControlName = "State" 
+                            class="validate"
+                            pattern=".{5,}">
+                        <label for="State">State</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="City" 
+                            type="text"
+                            formControlName = "City" 
+                            class="validate"
+                            pattern=".{5,}">
+                        <label for="City">City</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="Area" 
+                            (keydown)="editkeydown($event)"
+                            type="text"
+                            formControlName = "Area" 
+                            class="validate"
+                            pattern=".{5,}">
+                        <label for="Area">Area</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="Pincode" 
+                            type="number"
+                            formControlName = "Pincode" 
+                            class="validate"
+                            pattern=".{6,6}">
+                        <label for="Pincode">Pincode</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="Landmark"
+                        formControlName = "Landmark" 
+                            type="text" 
+                            class="validate"
+                            pattern=".{6,}">
+                        <label for="Landmark">Landmark</label>
+                    </div>
+                </div>
+
+                <button 
+                    class="waves-effect waves-light btn blue pull-right"
+                    [disabled]= "!AddressForm.valid">
+                    Submit
+                </button>
+            </form>
+
+            <a (click) = "profilepge()" style="cursor: pointer;">Go back</a>
+        </div>
+
+    </div>
+
+    <div class="row" style="min-height: 100vh;" *ngIf="going_to_edit"> 
+        <div class="col s3">
+            <p></p>
+        </div>
+
+        <div class="col s6 m6">
+            <!-- <h5>Update Address</h5> -->
+            <h5 style="text-align: center;">Update Address</h5>
+            <form class="col s12" [formGroup] = "EditAddressForm" novalidate (ngSubmit) = "SubmitEditAddressForm()">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="Line1" 
+                            type="text"
+                            formControlName = "Line1"
+                            (keydown)="editkeydown($event)"
+                            value= "{{going_to_edit.Line1}}"
+                            class="validate"
+                            pattern=".{5,}">
+                        <label for="Line1">Line 1</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="Line2"
+                            (keydown)="editkeydown($event)" 
+                            type="text"
+                            formControlName = "Line2" 
+                            class="validate"
+                            pattern=".{5,}">
+                        <label for="Line2">Line 2</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="State"
+                            (keydown)="editkeydown($event)" 
+                            type="text"
+                            formControlName = "State" 
+                            class="validate"
+                            pattern=".{5,}">
+                        <label for="State">State</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="City" 
+                            (keydown)="editkeydown($event)"
+                            type="text"
+                            formControlName = "City" 
+                            class="validate"
+                            pattern=".{5,}">
+                        <label for="City">City</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="Area" 
+                            (keydown)="editkeydown($event)"
+                            type="text"
+                            formControlName = "Area" 
+                            class="validate"
+                            pattern=".{5,}">
+                        <label for="Area">Area</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="Pincode"
+                            (keydown)="editkeydown($event)" 
+                            type="number"
+                            formControlName = "Pincode" 
+                            class="validate"
+                            pattern=".{6,6}">
+                        <label for="Pincode">Pincode</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="Landmark"
+                            (keydown)="editkeydown($event)"
+                        formControlName = "Landmark" 
+                            type="text" 
+                            class="validate"
+                            pattern=".{6,}">
+                        <label for="Landmark">Landmark</label>
+                    </div>
+                </div>
+
+                <button 
+                    class="waves-effect waves-light btn blue pull-right"
+                    [disabled]= "!EditAddressForm.valid"
+                    *ngIf = "savechangebtn">
+                    Save Changes
+                </button>
+            </form>
+            <a (click) = "profilepge()" style="cursor: pointer;">Go back</a>
+        </div>
+    </div>
+
+
+    <app-footer></app-footer>
+
+    
+</div>

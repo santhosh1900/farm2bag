@@ -1,0 +1,342 @@
+<nav class="#00c853 green accent-4" id="mainNavbar" style="position: sticky !important;">
+    <div class="container-fluid">
+        <div class="nav-wrapper">
+            <input (keydown) = "search($event)" placeholder="Search" type="text" id="search" class="validate #eceff1 blue-grey lighten-5" autocomplete="off">
+            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <a (click) = "NavigateToHomePage()" class="brand-logo center">Farm2Bag.com</a>
+           
+            <!-- <li class="collection-item avatar" *ngFor= "let item of userCart">
+                <img src={{item.image}} alt="" class="circle">
+                <span class="title">{{item.name}}</span>
+                <a href="#!" class="secondary-content"><i class="material-icons">delete</i></a>
+            </li>   -->
+            <ul class="right hide-on-med-and-down nav__content">
+                <!-- Dropdown Trigger -->
+                <li id="user__cart1" *ngIf="LoggedUser">
+                    <a class="dropdown-trigger" data-target="dropdown2">
+                        <i class="fa fa-shopping-cart fa-2x" style="margin-right: 10px;" aria-hidden="true"></i>
+                        <span class="new"> {{ userCartLength }} </span>
+                    </a>
+                    <ul id="dropdown2" class="dropdown-content nav__content">
+                        <li class="hover_hider" *ngIf="userCartLength > 0">
+                            <ul class="collection">
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total Price</th>
+                                        <th>Delete Item</th>
+                                    </tr>
+                                    </thead>
+                            
+                                    <tbody>
+                                    <tr *ngFor= "let item of userCart.Cart">
+                                        <td><img class="table_img" src={{item.Vegitable.image}} alt=""></td>
+                                        <td>{{item.Vegitable.name}}</td>
+                                        <td>{{item.Vegitable.actualPrice}}</td>
+                                        <td>{{item.Quantity}}</td>
+                                        <td>{{item.Vegitable.actualPrice * item.Quantity}}</td>
+                                        <td><a (click)="delete(item)" class="td_a hover_hider noscroll"><i class="material-icons">delete</i></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </ul>
+                        </li>
+
+                        <li class="hover_hider noscroll" *ngIf="userCartLength > 0"> 
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="center-align">Grand Total : &#x20B9; {{grandTotal}}  </th>
+                                        <th class="center-align" (click) = "CartPage()"> <span class="btn #2e7d32 green darken-3"> Check Bag</span></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </li>
+
+                        <li *ngIf="userCartLength <= 0">
+                            <ul>
+                                <li class="collection-item" style="text-align: center;"> Sorry Sir you haven't selected any product </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <!-- *ngIf="!LoggedUser" -->
+                <li (click)= "CancelClear()" *ngIf="!LoggedUser">
+                    <a href="#login_signIn_modal" class="modal-trigger">
+                        <i class="fa fa-user fa-2x" aria-hidden="true"></i>
+                        <span class="fa-2x"> Login </span> 
+                    </a>
+                </li>
+
+                <li *ngIf="LoggedUser" > 
+                    <a class="dropdown-trigger" data-target="profile_dropdown1">
+                        <i class="fa fa-user fa-2x" aria-hidden="true"></i>
+                        <span class="fa-2x"> {{ LoggedUser.Username.substring(0, 7) + "..." }}  </span>
+                    </a>
+                    <ul id="profile_dropdown1" class="dropdown-content profile_dropdown nav__content">
+                        <li (click)="NavigateToProfilePage()"> 
+                            <a style="color:#4caf50"> 
+                                <i class="fa fa-user" aria-hidden="true"></i> <span> Profile </span> 
+                            </a> 
+                        </li>
+                        <li class="divider"></li>
+                        <li> 
+                            <a style="color:#4caf50"> 
+                                <i class="fa fa-heart-o" aria-hidden="true"></i> <span> Whishlist </span> 
+                            </a> 
+                        </li>
+                        <li class="divider"></li>
+                        <li> 
+                            <a style="color : #4caf50" (click)="logout()"> 
+                                <i class="fa fa-sign-out" aria-hidden="true" ></i> <span> Logout </span> 
+                            </a> 
+                        </li>
+                        <li class="divider"></li>
+                        <li> 
+                            <a style="color : #4caf50" (click)="SellproductPage()"> 
+                                <i class="fa fa-money" aria-hidden="true" ></i> <span> Sell Your Product? </span> 
+                            </a> 
+                        </li>
+                        <li class="divider"></li>
+                        <li> 
+                            <a style="color : #4caf50" (click)="ExplorePage()"> 
+                                <i class="fa fa-globe" aria-hidden="true"></i> <span> Explore World </span> 
+                            </a> 
+                        </li>
+                        <li class="divider"></li>
+                        <li> 
+                            <a style="color : #4caf50" (click)="ChatbotPage()"> 
+                                <i class="fa fa-volume-control-phone" aria-hidden="true"></i> <span> Contact Farm2Bag </span> 
+                            </a> 
+                        </li>
+                        <li class="divider"></li>
+                    </ul>
+                </li>
+
+                <!-- keyboard_arrow_down -->
+
+                <!-- <li><a><i class="fa fa-user fa-2x" aria-hidden="true"></i><span class="fa-2x"> Santhosh </span> </a></li> -->
+
+                <li>
+                    <a class="dropdown-trigger" data-target="dropdown1">
+                        <i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>
+                        <span class="fa-2x area"> Chennai </span>                   
+                    </a>
+                    <ul id="dropdown1" class="dropdown-content location nav__content">
+                        <li><a class="area_loc">Chennai</a> </li>
+                        <li class="divider"></li>
+                        <li><a class="area_loc">Erode</a> </li>
+                        <li class="divider"></li>
+                        <li><a class="area_loc">Karur</a> </li>
+                        <li class="divider"></li>
+                        <li><a class="area_loc">Tiruppur</a> </li>
+                        <li class="divider"></li>
+                        <li><a class="area_loc">Coimbatore</a> </li>
+                        <li class="divider"></li>
+                        <li><a class="area_loc">Salem</a> </li>
+                        <li class="divider"></li>
+                        <li><a class="area_loc">Namakkal</a> </li>
+                        <li class="divider"></li>
+                    </ul>
+                </li>          
+            </ul>
+
+            <div *ngIf = "ComputerUserTyping">
+                <ul class="collection search-recomdation">
+                    <li class="collection-item avatar" *ngFor= "let item of SearchResult">
+                      <img src= {{item.image}}  alt="" class="circle">
+                      <span class="title">{{ item.name }}</span>
+                      <p (click) = "ShowPage(item._id)"> {{ item.tamilName }} <br>
+                        {{ item.farm.name }}
+                      </p>
+                      <a href="#!" class="secondary-content"> &#x20B9; {{ item.actualPrice }}  </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</nav>
+
+
+<ul id="slide-out" class="sidenav nav__content" style="width: 85%; z-index: 999999;">
+    <li>
+        <input (keydown) = "MobileSearch($event)" placeholder="Search" type="text" class="validate #eceff1 blue-grey lighten-5 mobilesearch">
+
+        <div *ngIf = "MobileUserTyping">
+            <ul class="collection search-recomdation" id="mobilesearch_recomdation">
+                <li class="collection-item avatar" *ngFor= "let item of SearchResult">
+                  <img src= {{item.image}}  alt="" class="circle">
+                  <span class="title">{{ item.name }}</span>
+                  <p (click) = "ShowPage(item._id)"> {{ item.tamilName }} <br>
+                    {{ item.farm.name }}
+                  </p>
+                  <a href="#!" class="secondary-content"> &#x20B9; {{ item.actualPrice }}  </a>
+                </li>
+            </ul>
+        </div>
+
+    </li>
+
+    <li id="user__cart2" *ngIf="LoggedUser">
+        <a class="dropdown-trigger" data-target="dropdown3">
+            <i class="fa fa-shopping-cart fa-2x" style="margin-right: 10px;" aria-hidden="true"></i>
+            <span class="new"> {{userCartLength}} </span>
+        </a>
+        <ul id="dropdown3" class="dropdown-content dropdown-content2 nav__content">
+            <li class="hover_hider" *ngIf="userCartLength > 0">
+                <ul class="collection">
+                    <table>
+                        <thead>
+                          <tr>
+                              <th>Image</th>
+                              <th>Name</th>
+                              <th>Price</th>
+                              <th>Quantity</th>
+                              <th>Total Price</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor= "let item of userCart.Cart">
+                            <td><img class="table_img" src={{item.Vegitable.image}} alt=""></td>
+                            <td>{{item.Vegitable.name}}</td>
+                            <td>{{item.Vegitable.actualPrice}}</td>
+                            <td>{{item.Quantity}}</td>
+                            <td>{{item.Vegitable.actualPrice * item.Quantity}}</td>
+                          </tr>
+                        </tbody>
+                    </table>
+                </ul>
+            </li>
+
+            <li class="hover_hider noscroll" *ngIf="userCartLength > 0"> 
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="center-align">Grand Total : &#x20B9; {{grandTotal}}  </th>
+                            <th class="center-align" (click) = "CartPage()"> <span class="btn #2e7d32 green darken-3"> Check Bag</span></th>
+                        </tr>
+                    </thead>
+                </table>
+            </li>
+
+            <li *ngIf="userCartLength <= 0">
+                <ul>
+                    <li class="collection-item" style="text-align: center;"> Sorry Sir you haven't selected any product </li>
+                </ul>
+            </li>
+
+        </ul>
+    </li>
+
+    <li (click)= "CancelClear()" *ngIf="!LoggedUser" >
+        <a href="#login_signIn_modal" class="modal-trigger">
+            <i class="fa fa-user fa-2x" aria-hidden="true"></i>
+            <span class="fa-2x"> Login </span> 
+        </a>
+    </li>
+
+    <li *ngIf="LoggedUser" > 
+        <a class="dropdown-trigger" data-target="profile_dropdown2">
+            <i class="fa fa-user fa-2x" aria-hidden="true"></i>
+            <span class="fa-2x"> {{ LoggedUser.Username.substring(0, 18) + "..." }}  </span>
+        </a>
+        <ul id="profile_dropdown2" class="dropdown-content dropdown-content2 nav__content">
+            <li (click)="NavigateToProfilePage()"> 
+                <a> 
+                    <i class="fa fa-user" aria-hidden="true"></i> <span> Profile </span> 
+                </a> 
+            </li>
+            <li class="divider"></li>
+            <li> 
+                <a> 
+                    <i class="fa fa-heart-o" aria-hidden="true"></i> <span> Whishlist </span> 
+                </a> 
+            </li>
+            <li class="divider"></li>
+            <li> 
+                <a (click)="logout()"> 
+                    <i class="fa fa-sign-out" aria-hidden="true"></i> <span> Logout </span> 
+                </a> 
+            </li>
+            <li class="divider"></li>
+            <li> 
+                <a (click)="SellproductPage()"> 
+                    <i class="fa fa-money" aria-hidden="true" ></i> <span> Sell Your Product? </span> 
+                </a> 
+            </li>
+            <li class="divider"></li>
+            <li> 
+                <a (click)="ExplorePage()"> 
+                    <i class="fa fa-globe" aria-hidden="true"></i> <span> Explore World </span> 
+                </a> 
+            </li>
+            <li class="divider"></li>
+            <li> 
+                <a (click)="ChatbotPage()"> 
+                    <i class="fa fa-volume-control-phone" aria-hidden="true"></i> <span> Contact Farm2Bag </span> 
+                </a> 
+            </li>
+            <li class="divider"></li>
+        </ul>
+    </li>
+
+    <li>
+        <a class="dropdown-trigger" data-target="dropdown4">
+            <i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>
+             <span class="fa-2x area">Chennai </span>
+        </a>
+        <ul id="dropdown4" class="dropdown-content dropdown-content2 nav__content">
+            <li><a class="area_loc">Chennai</a> </li>
+            <li class="divider"></li>
+            <li><a class="area_loc">Erode</a> </li>
+            <li class="divider"></li>
+            <li><a class="area_loc">Karur</a> </li>
+            <li class="divider"></li>
+            <li><a class="area_loc">Tiruppur</a> </li>
+            <li class="divider"></li>
+            <li><a class="area_loc">Coimbatore</a> </li>
+            <li class="divider"></li>
+            <li><a class="area_loc">Salem</a> </li>
+            <li class="divider"></li>
+            <li><a class="area_loc">Namakkal</a> </li>
+            <li class="divider"></li>
+        </ul>
+    </li>
+</ul>
+ 
+
+<!-- login in modal   -->
+<div id="login_signIn_modal" class="modal"> 
+    <a class="btn-floating btn-large modal-close red right">
+        <i class="material-icons" (click)="Rest()" >close</i>
+    </a>
+    <div class="modal-content">
+        <h4 style="text-align: center; white-space: nowrap;">Welcome To Farm2Bag</h4>
+        
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s6"><a class="active" href="#test1">Login</a></li>
+                    <li class="tab col s6"><a href="#test2">Sign In</a></li>
+                </ul>
+            </div>
+
+            <div id="test1" class="col s12">
+                <app-login [clear]="clear" (Logged_User)= "logged_user($event)"></app-login>
+            </div>
+
+            <div id="test2" class="col s12">
+                <app-signin [clear]="clear" (Logged_User)= "logged_user($event)"></app-signin>
+            </div>
+        </div>
+    </div>
+</div>
+
+

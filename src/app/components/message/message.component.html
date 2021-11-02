@@ -1,0 +1,63 @@
+<div>
+    <div class="row" *ngIf = "!Loader">
+        <div class="col s12" style="height: 83vh;">
+            <div class="card">
+                <div class="card-action" style="display: flex;">
+                    <img src="{{ ReceiverData.ProfilePic }}" alt="" class="circle profilepic">
+                    <h5> <i class="material-icons online__indicator">fiber_manual_record </i> <span> {{ ReceiverData.Username }} </span>  </h5>
+                </div>
+            </div>
+            <div class="card message__holder">
+                <div class="row" *ngFor = "let message of Messages">
+
+                    <div class="col s5 messages" *ngIf = "message.senderId == ReceiverData._id">
+                        <div class="content left-align">
+                            {{ message.body }}
+                        </div>
+                        <small class="pull-right time__update"> {{ GetTime(message.createdAt) }}  </small>
+                    </div>
+                    
+                    <div class="col offset-s7 s5 messages" *ngIf = "message.senderId == CurrentUser._id">
+                        <div class="content">
+                            {{ message.body }}
+                        </div>
+                        <small class="pull-left time__update">{{ GetTime(message.createdAt) }}</small>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="row">
+                    <form class="col s12 form__style" [formGroup] = "MessageForm" novalidate (ngSubmit) = "SubmitChatForm()">
+                        <div class="row">
+                            <div class="input-field col s9">
+                                <textarea id="textarea1" formControlName = "Message"  class="materialize-textarea"></textarea>
+                            </div>
+                            <div class="col s3 center-align">
+                                <button class="btn sender_btn green input-field"> <span style="font-size: 1.5rem;"> Send </span> <i class="material-icons">keyboard_return</i></button>
+                            </div>
+                         </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" *ngIf = "Loader">
+        <div class="col s12 center-align">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

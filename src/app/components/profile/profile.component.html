@@ -1,0 +1,52 @@
+<div>
+    <app-navbar ></app-navbar>
+
+    <div class="container-fluid main__content" style="margin-top: 3rem;">
+        <div class="row">
+            <!-- chevron_right -->
+            <div class="col s12 m3">
+                <ul class="collection">
+                    <li class="collection-item slide__right" 
+                        [ngClass] = "( AllowProfileView ? 'Active' : 'InActive')" 
+                        (click) = "AllowProfile()"> 
+                        <i class="tiny material-icons"> 
+                            chevron_right 
+                        </i>  
+                        Account Info 
+                    </li>
+
+
+                    <li class="collection-item slide__right" 
+                        [ngClass] = "( AllowUserPreviousCart ? 'Active' : 'InActive')" 
+                        (click) = "AllowPreviousCart()"> 
+                        <i class="tiny material-icons"> 
+                            chevron_right 
+                        </i> 
+                        My Prevoius Cart
+                    </li>
+
+                    <li class="collection-item slide__right" 
+                        [ngClass] = "( AllowReviewView ? 'Active' : 'InActive')" 
+                        (click) = "AllowReview()"> 
+                        <i class="tiny material-icons"> 
+                            chevron_right 
+                        </i> 
+                        My Review Rating 
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col s12 m8" *ngIf="AllowProfileView">
+                <app-accountinfo (Logged_User)= "logged_user($event)" ></app-accountinfo>
+            </div>
+
+            <div class="col s12 m8" *ngIf="AllowUserPreviousCart">
+                <app-previous-cart></app-previous-cart>
+            </div>
+            <!-- AllowUserPreviousCart -->
+
+        </div>
+    </div>
+
+    <app-footer></app-footer>
+</div>

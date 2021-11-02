@@ -1,0 +1,40 @@
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input:focus ~ label {
+    color : #0f0f0f !important;
+}
+
+.enter_btn{
+    width: 60%;
+    font-size: 1.5rem;
+}
+
+.error {
+    color: red;
+}
+
+.edit_mobile
+{
+   color:  #0d47a1;
+   margin-top: 10px;
+   font-size: 21px; 
+}
+
+.hide{
+  opacity: 0 !important;
+}
+
+.blue{
+  color: #0d47a1;
+  background-color: white !important;
+}

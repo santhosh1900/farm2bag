@@ -1,0 +1,119 @@
+<div>
+    <app-navbar
+        (User_Cart_Event)	= "User_Cart_Event_Catch($event)"
+        (LoggedUserEvent)   = "Logged_User($event)"
+    ></app-navbar>
+
+    <app-scroll-top></app-scroll-top>
+
+    <div class="main__content">
+
+        <app-loader *ngIf = "Loader || UserCart_Loader"></app-loader>
+
+        <div *ngIf = "!Loader && !UserCart_Loader">
+            <h4><center> Checkout </center></h4>
+            <div class="row">
+                <div class="col s12 m6" >
+                    <div class="col s12" *ngIf = "Address_List.length <= 0">
+                        <a class="waves-effect waves-light btn #388e3c green darken-2 btn" style="font-size: 1.5rem;" (click) = "NavigateToAddressForm()" ><i class="material-icons">add</i> Add New Address </a>
+                    </div>
+                    <div *ngIf = "Address_List.length > 0">
+                        <h5><center>Select Address</center></h5>
+                        <div class="card" style="padding: 1rem;">
+                            <form action="#">
+                                <p *ngFor = "let address of Address_List">
+                                    <label (click) = "SelectAddress(address)">
+                                        <input class="with-gap" name="group3" type="radio" />
+                                        <span> {{ address.User_Address.Line1 }} </span>
+                                        <br>
+                                        <span class="address__lines"> {{ address.User_Address.Line2 }} </span>
+                                        <br>
+                                        <span class="address__lines"> {{ address.User_Address.City }} </span>
+                                        <br>
+                                        <span class="address__lines"> {{ address.User_Address.State }} </span>
+                                        <br>
+                                        <span class="address__lines"> {{ address.User_Address.Pincode }} </span>
+                                        <br>
+                                        <span class="address__lines"> {{ address.User_Address.Landmark }} </span>
+                                        <hr>
+                                    </label>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s12 m6">
+                    <h5><center>User Cart</center></h5>
+                    <div class="card" style="padding: 1rem;overflow: hidden;">
+                        <div *ngIf = "Usercart.length == 0" >
+                            <h5><center>You Haven't Purchased Anything</center></h5>
+                        </div>
+                        <div *ngIf = "Usercart.length > 0" >
+                            <table id="product__table">
+                                <thead>
+                                  <tr>
+                                      <th class="table__headings">Product Name</th>
+                                      <th class="table__headings">Quantity</th>
+                                      <th class="table__headings">Price</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor = "let item of Usercart">
+                                    <td> {{ item.Vegitable.name }} </td>
+                                    <td> {{ item.Quantity}} ( {{ item.Vegitable.weight || "500g" }} )  x {{item.Vegitable.actualPrice }} </td>
+                                    <td> {{ item.Quantity * item.Vegitable.actualPrice }} </td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                            <br>
+                            <hr>
+                            <br>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Sub Total</th>
+                                        <th style="text-align: right;"> ₹ {{ Total }}</th>
+                                    </tr>
+                                </thead>
+                                <thead>
+                                    <tr>
+                                        <th>Delivery Amount</th>
+                                        <th style="text-align: right;"> ₹ 65</th>
+                                    </tr>
+                                </thead>
+                                <thead>
+                                    <tr>
+                                        <th>Discount Amount</th>
+                                        <th style="text-align: right;"> -₹ 0</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <hr>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Grand Total</th>
+                                        <th style="text-align: right;"> ₹ {{ grandTotal }}</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <hr>
+                            <p>Expected Delivery : {{ DeliveryDate }}</p>
+                            <br>
+                            
+                            <a class="waves-effect waves-light btn #388e3c green darken-2 pull-right" (click) = "PlaceOrder()" *ngIf = "Address_List.length > 0 && Correct_Address">Cash On Delivery</a>
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+            
+        </div>
+       
+    </div>
+
+    <app-footer></app-footer>
+
+</div>

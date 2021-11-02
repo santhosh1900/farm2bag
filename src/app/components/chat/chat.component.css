@@ -1,0 +1,48 @@
+.chatRow{
+    bottom: 0 !important;
+    margin-bottom: 0px !important;
+    position: relative;
+    max-height: 700px !important;
+}
+
+.online__indicator{
+    font-size: 17px;
+    color: green;
+}
+
+.messages{
+    padding: .6rem;
+    background-color: #f3f3f3;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+    word-break: break-all;
+}
+
+.message__holder{
+    padding: 1.3rem;
+}
+
+.time__update{
+    margin-top: 1rem;
+}
+
+.message__holder{
+    min-height: 70%;
+    max-height: 70%;
+    overflow-y: scroll;
+    overflow-x: hidden; 
+}
+
+.form__style{
+    padding: 0rem 2rem;
+}
+
+.sender_btn{
+    margin-top: 2rem;
+}
+
+.profilepic{
+    height: 4rem;
+    width: 4rem;
+    margin-right: 1rem;
+}
